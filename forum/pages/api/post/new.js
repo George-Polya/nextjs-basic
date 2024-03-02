@@ -1,6 +1,15 @@
 import { connectDB } from "@/util/database";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(req, res) {
+
+  const session = await getServerSession(req, res, authOptions) // 현재 로그인된 유저의 정보
+  console.log(session.user.email)
+  if(session){
+    req.body.author = session.user.email;  
+  }
+
   if(req.method === "POST"){
       console.log(req.body)
       if(req.body.title === "" || req.body.content ===""){
@@ -9,7 +18,8 @@ export default async function handler(req, res) {
 
       const body = {
         title: req.body.title,
-        content : req.body.content
+        content : req.body.content,
+        author: req.body.author
       }
       
 
@@ -28,7 +38,5 @@ export default async function handler(req, res) {
       
 
       
-  }else if(req.method === "GET"){
-    return res.status(200).json({ name: 'John Doe' })
   }
 }
