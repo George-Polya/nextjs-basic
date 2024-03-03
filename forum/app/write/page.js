@@ -8,7 +8,7 @@ export default function Write(){
                 <input type="text" name="title" placeholder="글 제목"/>
                 
                 <input type="text" name="content" placeholder="글 내용"/>
-                
+                <input type="file" accept="image/*" />
                 <button type="submit">버튼</button>
                 
                 
